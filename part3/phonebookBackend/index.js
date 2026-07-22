@@ -1,5 +1,7 @@
 const express = require("express");
 var morgan = require("morgan");
+const cors = require('cors')
+
 const app = express();
 
 let persons = [
@@ -26,11 +28,15 @@ let persons = [
 ];
 
 morgan.token("body", function getBody(req) {
-  return JSON.stringify(req.body)
-})
+  return JSON.stringify(req.body);
+});
 
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms :body"),
+);
 app.use(express.json());
+app.use(express.static("dist"));
+app.use(cors())
 
 const generateId = () => {
   return String(Math.floor(Math.random() * 999999));
@@ -92,7 +98,7 @@ app.post("/api/persons", (request, response) => {
   response.json(person);
 });
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

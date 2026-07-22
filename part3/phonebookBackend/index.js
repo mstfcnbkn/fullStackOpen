@@ -1,6 +1,5 @@
 const express = require("express");
 var morgan = require("morgan");
-const cors = require('cors')
 
 const app = express();
 
@@ -36,7 +35,6 @@ app.use(
 );
 app.use(express.json());
 app.use(express.static("dist"));
-app.use(cors())
 
 const generateId = () => {
   return String(Math.floor(Math.random() * 999999));
